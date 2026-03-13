@@ -31,5 +31,5 @@
       "last 1 chrome version"
     ]
   },
-  "proxy": "http://localhost:8080"
+  "proxy": "https://car-rental-system-production-8c3e.up.railway.app/"
 }
