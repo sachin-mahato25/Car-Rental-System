@@ -4,7 +4,7 @@
 
 Live demo: https://carrental-system-app.vercel.app/login
 
-Converted from the original Java Swing desktop application.
+
 
 ---
 
