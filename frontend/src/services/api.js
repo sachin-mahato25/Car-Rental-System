@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://car-rental-system-production-8c3e.up.railway.app/api',
   headers: { 'Content-Type': 'application/json' },
 });
 
