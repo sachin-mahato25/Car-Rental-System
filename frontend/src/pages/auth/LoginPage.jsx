@@ -14,11 +14,16 @@ export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!username || !password) { toast.error("Fill in all fields"); return; }
+    if (!username || !password) {
+      toast.error("Fill in all fields");
+      return;
+    }
     setLoading(true);
     try {
       const { data } = await authAPI.login({ username, password, role });
@@ -27,7 +32,9 @@ export default function LoginPage() {
       navigate(role === "ADMIN" ? "/admin/dashboard" : "/customer/dashboard");
     } catch {
       toast.error("Invalid credentials");
-    } finally { setLoading(false); }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -353,7 +360,7 @@ export default function LoginPage() {
         <div className="orb orb3" />
         <div className="grid-overlay" />
 
-        <div className={`card-wrap ${mounted ? 'show' : ''}`}>
+        <div className={`card-wrap ${mounted ? "show" : ""}`}>
           <div className="card">
             {/* Header */}
             <div className="car-icon-wrap">
@@ -364,11 +371,19 @@ export default function LoginPage() {
 
             {/* Role Toggle */}
             <div className="toggle-wrap">
-              <div className={`toggle-slider ${role === 'ADMIN' ? 'admin' : ''}`} />
-              <button className={`toggle-btn ${role === 'CUSTOMER' ? 'active' : 'inactive'}`} onClick={() => setRole('CUSTOMER')}>
+              <div
+                className={`toggle-slider ${role === "ADMIN" ? "admin" : ""}`}
+              />
+              <button
+                className={`toggle-btn ${role === "CUSTOMER" ? "active" : "inactive"}`}
+                onClick={() => setRole("CUSTOMER")}
+              >
                 Customer
               </button>
-              <button className={`toggle-btn ${role === 'ADMIN' ? 'active' : 'inactive'}`} onClick={() => setRole('ADMIN')}>
+              <button
+                className={`toggle-btn ${role === "ADMIN" ? "active" : "inactive"}`}
+                onClick={() => setRole("ADMIN")}
+              >
                 Admin
               </button>
             </div>
@@ -384,7 +399,7 @@ export default function LoginPage() {
                     type="text"
                     placeholder="Enter your username"
                     value={username}
-                    onChange={e => setUsername(e.target.value)}
+                    onChange={(e) => setUsername(e.target.value)}
                     autoComplete="username"
                   />
                 </div>
@@ -396,21 +411,27 @@ export default function LoginPage() {
                   <span className="input-icon">🔒</span>
                   <input
                     className="input-field"
-                    type={showPass ? 'text' : 'password'}
+                    type={showPass ? "text" : "password"}
                     placeholder="Enter your password"
                     value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
-                    style={{ paddingRight: '48px' }}
+                    style={{ paddingRight: "48px" }}
                   />
-                  <button type="button" className="eye-btn" onClick={() => setShowPass(!showPass)}>
-                    {showPass ? '🙈' : '👁️'}
+                  <button
+                    type="button"
+                    className="eye-btn"
+                    onClick={() => setShowPass(!showPass)}
+                  >
+                    {showPass ? "🙈" : "👁️"}
                   </button>
                 </div>
               </div>
 
               <button type="submit" className="submit-btn" disabled={loading}>
-                {loading ? 'Signing in...' : `→ Sign In as ${role === 'ADMIN' ? 'Admin' : 'Customer'}`}
+                {loading
+                  ? "Signing in..."
+                  : `→ Sign In as ${role === "ADMIN" ? "Admin" : "Customer"}`}
               </button>
             </form>
 
@@ -418,19 +439,6 @@ export default function LoginPage() {
             <div className="bottom-links">
               <p className="register-link">
                 Don't have an account? <a href="/register">Register here</a>
-              </p>
-            </div>
-
-            <div className="divider">
-              <div className="divider-line" />
-              <span className="divider-text">DEFAULT ACCESS</span>
-              <div className="divider-line" />
-            </div>
-
-            <div className="admin-card">
-              <div className="admin-card-dot" />
-              <p className="admin-card-text">
-                Admin login — <strong>admin</strong> / <strong>admin123</strong>
               </p>
             </div>
           </div>
