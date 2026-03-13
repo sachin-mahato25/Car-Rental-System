@@ -1,5 +1,8 @@
 # 🚗 Car Rental System – Full Stack Web Application
+
 **Java Spring Boot REST API + React + Tailwind CSS**
+
+Live demo: https://carrental-system-app.vercel.app/login
 
 Converted from the original Java Swing desktop application.
 
@@ -66,26 +69,14 @@ carrental-web/
         └── components/               ← (add reusable components here)
 ```
 
----
-
-## 🔄 Swing → Spring Boot Conversion Map
-
-| Swing Class         | Web Equivalent                              |
-|---------------------|---------------------------------------------|
-| `UserDAO`           | `UserRepository` (Spring Data JPA)          |
-| `CarDAO`            | `CarRepository` + `CarController`           |
-| `BookingDAO`        | `BookingRepository` + `BookingController`   |
-| `SessionManager`    | `JwtUtils` + `AuthContext` (React)          |
-| `LoginForm.java`    | `LoginPage.jsx`                             |
-| `DashboardForm.java`| `DashboardLayout.jsx` + Admin/Customer pages|
-| `CarForm.java`      | `AdminCars.jsx`                             |
-| `BookingForm.java`  | `BookingPage.jsx`                           |
+> **Note:** `database_schema.sql` lives at the repository root (next to `carrental-web/`) and contains the full MySQL schema used by the backend.
 
 ---
 
 ## ⚙️ Setup Instructions
 
 ### Prerequisites
+
 - Java JDK 17+
 - Node.js 18+
 - MySQL 8.0+
@@ -94,8 +85,27 @@ carrental-web/
 ---
 
 ### Step 1 – Database Setup
+
+The database schema is provided in the root-level `database_schema.sql` file. You can run the full schema directly, or inspect the file for the exact table definitions used by the app.
+
 ```sql
--- Run the original database_schema.sql from the Swing project
+-- Sample schema (also in database_schema.sql)
+CREATE DATABASE IF NOT EXISTS car_rental_db;
+USE car_rental_db;
+
+-- Users table (admin + customers)
+CREATE TABLE IF NOT EXISTS users (
+    user_id      INT AUTO_INCREMENT PRIMARY KEY,
+    username     VARCHAR(50)  NOT NULL UNIQUE,
+    password     VARCHAR(255) NOT NULL,
+    role         ENUM('ADMIN','CUSTOMER') NOT NULL DEFAULT 'CUSTOMER',
+    created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+To apply the full schema:
+
+```bash
 mysql -u root -p < database_schema.sql
 ```
 
@@ -106,6 +116,7 @@ Spring Boot with `ddl-auto=update` will auto-create/update tables on first run.
 ### Step 2 – Backend Setup
 
 **Update DB credentials** in `backend/src/main/resources/application.properties`:
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/car_rental_db?...
 spring.datasource.username=root
@@ -113,10 +124,12 @@ spring.datasource.password=YOUR_PASSWORD
 ```
 
 **Run the backend:**
+
 ```bash
 cd backend
 mvn spring-boot:run
 ```
+
 Backend starts at: `http://localhost:8080`
 
 ---
@@ -128,6 +141,7 @@ cd frontend
 npm install
 npm start
 ```
+
 Frontend starts at: `http://localhost:3000`
 
 The `"proxy": "http://localhost:8080"` in package.json routes all `/api/*` calls to Spring Boot.
@@ -135,22 +149,25 @@ The `"proxy": "http://localhost:8080"` in package.json routes all `/api/*` calls
 ---
 
 ### Step 4 – Default Login
-| Role     | Username | Password   |
-|----------|----------|------------|
-| Admin    | `admin`  | `admin123` |
-| Customer | Register via UI |    |
+
+| Role     | Username        | Password   |
+| -------- | --------------- | ---------- |
+| Admin    | `admin`         | `admin123` |
+| Customer | Register via UI |            |
 
 ---
 
 ## 🌐 API Endpoints
 
 ### Auth (Public)
+
 ```
 POST   /api/auth/login            Body: { username, password, role }
 POST   /api/auth/register         Body: { username, password, fullName, email, ... }
 ```
 
 ### Cars
+
 ```
 GET    /api/cars/available        Public – list available cars
 GET    /api/cars                  Admin – all cars
@@ -161,6 +178,7 @@ DELETE /api/admin/cars/{id}       Admin – delete car
 ```
 
 ### Bookings
+
 ```
 GET    /api/bookings              Admin – all bookings
 GET    /api/bookings/my           Customer – own bookings
@@ -170,6 +188,7 @@ DELETE /api/bookings/{id}         Auth – cancel booking
 ```
 
 ### Admin
+
 ```
 GET    /api/admin/dashboard       Stats: cars, customers, bookings, revenue
 GET    /api/admin/customers       All customers
@@ -195,13 +214,13 @@ GET    /api/admin/locations       CRUD locations
 
 ## 🏗️ Tech Stack
 
-| Layer      | Technology                         |
-|------------|------------------------------------|
-| Backend    | Java 17, Spring Boot 3.2           |
-| Security   | Spring Security + JWT (jjwt)       |
-| Database   | MySQL 8 + Spring Data JPA          |
-| Frontend   | React 18 + React Router v6         |
-| Styling    | Tailwind CSS 3                     |
-| HTTP Client| Axios                              |
-| Toasts     | react-hot-toast                    |
-| Icons      | lucide-react                       |
+| Layer       | Technology                   |
+| ----------- | ---------------------------- |
+| Backend     | Java 17, Spring Boot 3.2     |
+| Security    | Spring Security + JWT (jjwt) |
+| Database    | MySQL 8 + Spring Data JPA    |
+| Frontend    | React 18 + React Router v6   |
+| Styling     | Tailwind CSS 3               |
+| HTTP Client | Axios                        |
+| Toasts      | react-hot-toast              |
+| Icons       | lucide-react                 |

@@ -3,9 +3,6 @@ import React, { createContext, useContext, useState } from "react";
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  // Use sessionStorage instead of localStorage
-  // sessionStorage clears when browser tab is closed
-  // but keeps data on page refresh
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("carRentalUser");
     return saved ? JSON.parse(saved) : null;
