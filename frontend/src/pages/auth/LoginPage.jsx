@@ -407,7 +407,7 @@ export default function LoginPage() {
 
               <div>
                 <label className="field-label">Password</label>
-                <div className="input-wrap" style={{ marginBottom: 0 }}>
+                <div className="input-wrap" style={{ marginBottom: "16px" }}>
                   <span className="input-icon">🔒</span>
                   <input
                     className="input-field"
