@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://car-rental-system-production-8c3e.up.railway.app/api",
+  baseURL: "https://carrental-backend-zxjd.onrender.com/api",
   headers: { "Content-Type": "application/json" },
 });
 
