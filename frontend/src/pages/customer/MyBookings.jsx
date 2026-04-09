@@ -17,7 +17,7 @@ export default function MyBookings() {
   const load = () => {
     setLoading(true);
     bookingsAPI.getMy()
-      .then(r => setBookings(r.data))
+      .then(r => setBookings(r.data.sort((a, b) => b.bookingId - a.bookingId)))
       .catch(() => toast.error('Failed to load bookings'))
       .finally(() => setLoading(false));
   };

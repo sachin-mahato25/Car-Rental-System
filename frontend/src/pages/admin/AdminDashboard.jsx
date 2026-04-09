@@ -14,7 +14,7 @@ export default function AdminDashboard() {
       adminAPI.getDashboard(),
       adminAPI.getBookings()
     ])
-      .then(([s, b]) => { setStats(s.data); setBookings(b.data.slice(0, 8)); })
+      .then(([s, b]) => { setStats(s.data); setBookings(b.data.sort((a, b) => b.bookingId - a.bookingId).slice(0, 8)); })
       .catch(() => toast.error('Failed to load dashboard'))
       .finally(() => { setLoading(false); setTimeout(() => setVisible(true), 50); });
   }, []);
@@ -132,9 +132,9 @@ export default function AdminDashboard() {
                   <td style={{ padding: '14px 20px', fontSize: '13px', color: '#94a3b8', fontWeight: '600' }}>#{b.bookingId}</td>
                   <td style={{ padding: '14px 20px', fontSize: '13px', color: '#0f172a', fontWeight: '600' }}>{b.customerName}</td>
                   <td style={{ padding: '14px 20px', fontSize: '13px', color: '#374151' }}>{b.companyName} {b.variantName}</td>
-                  <td style={{ padding: '14px 20px', fontSize: '13px', color: '#374151' }}>{b.startDate}</td>
-                  <td style={{ padding: '14px 20px', fontSize: '13px', color: '#374151' }}>{b.endDate}</td>
-                  <td style={{ padding: '14px 20px', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>₹{(b.totalAmount||0).toLocaleString()}</td>
+                  <td style={{ padding: '14px 20px', fontSize: '13px', color: '#374151' }}>{b.pickupDate}</td>
+                  <td style={{ padding: '14px 20px', fontSize: '13px', color: '#374151' }}>{b.returnDate}</td>
+                  <td style={{ padding: '14px 20px', fontSize: '13px', color: '#0f172a', fontWeight: '700' }}>₹{(b.totalPrice||0).toLocaleString()}</td>
                   <td style={{ padding: '14px 20px' }}>
                     <span style={{ fontSize: '11px', fontWeight: '700', color: statusColor(b.status), letterSpacing: '0.3px', padding: '4px 10px', borderRadius: '20px', background: statusColor(b.status) + '18' }}>{b.status}</span>
                   </td>
