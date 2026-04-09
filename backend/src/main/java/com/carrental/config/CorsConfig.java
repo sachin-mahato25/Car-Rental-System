@@ -13,7 +13,7 @@ public class CorsConfig implements WebMvcConfigurer {
             .allowedOrigins(
                 "http://localhost:3000",
                 "https://carrental-system-app.vercel.app",
-                "https://your-backend.onrender.com"
+                "https://carrental-backend-zxjd.onrender.com"
             )
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowedHeaders("*")
