@@ -1,9 +1,14 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://carrental-backend-zxjd.onrender.com/api",
+  baseURL: import.meta.env.VITE_API_URL || "https://carrental-backend-zxjd.onrender.com/api",
   headers: { "Content-Type": "application/json" },
 });
+
+// const api = axios.create({
+//   baseURL: "https://carrental-backend-zxjd.onrender.com/api",
+//   headers: { "Content-Type": "application/json" },
+// });
 
 // Attach JWT to every request
 api.interceptors.request.use((config) => {
