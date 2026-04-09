@@ -32,7 +32,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest req) {
         User dbUser = userRepository.findByUsername(req.getUsername()).orElse(null);
-        if (dbUser == null || !dbUser.getRole().equals(req.getRole())) {
+        if (dbUser == null || !dbUser.getRole().name().equals(req.getRole())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(new MessageResponse("Invalid credentials or role mismatch."));
         }
