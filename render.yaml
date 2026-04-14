@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: carrental-backend
+    env: java
+    rootDir: backend
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -jar target/carrental-api-1.0.0.jar
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+
+
+        
