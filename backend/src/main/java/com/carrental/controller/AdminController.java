@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
 public class AdminController {
     @Autowired private CarRepository        carRepository;
     @Autowired private CustomerRepository   customerRepository;
